@@ -1,35 +1,49 @@
 #!/usr/bin/env bash
 
-NVIM_DIR=$HOME/.config/nvim
 DIR="$(cd "$(dirname "$0")" && pwd)"
-ASTRO="astronvim"
 
-# Setup macOS packages
-if [[ "$OSTYPE" == "darwin"* ]]; then
+NVIM_DIR=$HOME/.config/nvim
+NVIM_CONFIG="lazyvim"
+
+DEPS=["fd" "rg" "lazygit" "neovim"]
+
+install_homebrew() {
+  if [[ "$OSTYPE" != "darwin"* ]]; then
+    echo "Homebrew installation is only supported on macOS. Skipping Homebrew installation."
+    return
+  fi
+
   if ! command -v brew >/dev/null 2>&1; then
     echo "Homebrew not found. Installing..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
+}
 
-  if ! command -v lazygit >/dev/null 2>&1; then
-    echo "lazygit not found. Installing with Homebrew..."
-    brew install lazygit
+setup_neovim() {
+  echo "Setting up Neovim configuration..."
+
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    for dep in "${DEPS[@]}"; do
+      if ! command -v "$dep" >/dev/null 2>&1; then
+        echo "$dep not found. Installing with Homebrew"
+        brew install "$dep"
+      fi
+    done
   fi
 
-  if ! command -v nvim >/dev/null 2>&1; then
-    echo "Neovim not found. Installing with Homebrew..."
-    brew install neovim
+  if [ -d "$NVIM_DIR" ] && [ ! -L "$NVIM_DIR" ]; then
+    echo "Backing up existing Neovim configuration to $NVIM_DIR.bak"
+    mv "$NVIM_DIR" "$NVIM_DIR.bak"
   fi
-fi
 
-# Configure nvim
+  if [ -e "$NVIM_DIR" ] || [ -L "$NVIM_DIR" ]; then
+    echo "Cleaning up existing Neovim configuration"
+    rm -rf "$NVIM_DIR"
+  fi
 
-if [ -d "$NVIM_DIR" ] && [ ! -L "$NVIM_DIR" ]; then
-  mv "$NVIM_DIR" "$NVIM_DIR.bak"
-fi
+  echo "Creating symbolic link for Neovim configuration"
+  ln -s "$DIR/$NVIM_CONFIG/" "$NVIM_DIR"
+}
 
-if [ -e "$NVIM_DIR" ] || [ -L "$NVIM_DIR" ]; then
-  rm -rf "$NVIM_DIR"
-fi
-
-ln -s "$DIR/$ASTRO/" "$NVIM_DIR"
+install_homebrew
+setup_neovim
