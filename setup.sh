@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
 DIR="$(cd "$(dirname "$0")" && pwd)"
 
 NVIM_DIR=$HOME/.config/nvim
@@ -8,7 +9,9 @@ NVIM_CONFIG="lazyvim"
 GHOSTTY_DIR=$HOME/.config/ghostty
 GHOSTTY_CONFIG="ghostty"
 
-DEPS=["fd" "ripgrep" "lazygit" "neovim" "ghostty"]
+STARSHIP_DIR=$HOME/.config
+
+DEPS=["fd" "ripgrep" "lazygit" "neovim" "ghostty" "starship"]
 
 install_homebrew() {
   if [[ "$OSTYPE" != "darwin"* ]]; then
@@ -56,6 +59,41 @@ setup_dotconfig_tool() {
 
 }
 
+setup_zsh() {
+  if [ -e "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ]; then
+    echo "Moving existing configuration to $HOME/.zshrc.local"
+    mv "$HOME/.zshrc" "$HOME/.zshrc.local"
+  fi
+
+  if [ -e "$HOME/.zshrc" ] || [ -L "$HOME/.zshrc" ]; then
+    echo "Cleaning up existing symlink"
+    rm -rf "$HOME/.zshrc"
+  fi
+
+  if [ -e "$DIR/zsh/starship.toml" ] && [ ! -L "$STARSHIP_DIR/starship.toml" ]; then
+    echo "Moving existing starship configuration to $STARSHIP_DIR/starship.bak"
+    mv "$STARSHIP_DIR/starship.toml" "$STARSHIP_DIR/starship.bak"
+  fi
+
+  if [ -e "$STARSHIP_DIR/starship.toml" ] || [ -L "$STARSHIP_DIR/starship.toml" ]; then
+    echo "Cleaning up existing starship symlink"
+    rm -rf "$STARSHIP_DIR/starship.toml"
+  fi
+
+  if [ ! -d "$HOME/.oh-my-zsh/" ]; then
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+  fi
+
+  git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+  git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git "$ZSH_CUSTOM/plugins/zsh-autocomplete"
+
+  echo "Creating symbolic links for .zshrc"
+  ln -s "$DIR/zsh/zshrc" "$HOME/.zshrc"
+  ln -s "$DIR/zsh/starship.toml" $"$STARSHIP_DIR/starship.toml"
+}
+
 setup_neovim() {
   setup_dotconfig_tool "$NVIM_CONFIG" "$NVIM_DIR"
 }
@@ -65,5 +103,6 @@ setup_ghostty() {
 }
 
 install_dependencies
+setup_zsh
 setup_neovim
 setup_ghostty
