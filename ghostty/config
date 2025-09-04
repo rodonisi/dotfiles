@@ -7,3 +7,4 @@ background-opacity = 0.9
 background-blur = 20
 auto-update = download
 auto-update-channel = stable
+command = /opt/homebrew/bin/nu

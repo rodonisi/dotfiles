@@ -11,7 +11,10 @@ GHOSTTY_CONFIG="ghostty"
 
 STARSHIP_DIR=$HOME/.config
 
-DEPS=["fd" "ripgrep" "lazygit" "neovim" "ghostty" "starship"]
+NUSHELL_DIR="$HOME/Library/Application Support/nushell"
+NUSHELL_CONFIG="nu"
+
+DEPS=("fd" "ripgrep" "lazygit" "neovim" "ghostty" "starship" "nushell")
 
 install_homebrew() {
   if [[ "$OSTYPE" != "darwin"* ]]; then
@@ -30,10 +33,7 @@ install_dependencies() {
 
   if [[ "$OSTYPE" == "darwin"* ]]; then
     for dep in "${DEPS[@]}"; do
-      if ! command -v "$dep" >/dev/null 2>&1; then
-        echo "$dep not found. Installing with Homebrew"
-        brew install "$dep"
-      fi
+      brew list "$dep" || brew install "$dep"
     done
   fi
 }
@@ -80,18 +80,24 @@ setup_zsh() {
     rm -rf "$STARSHIP_DIR/starship.toml"
   fi
 
-  if [ ! -d "$HOME/.oh-my-zsh/" ]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-  fi
-
-  git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
-  git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git "$ZSH_CUSTOM/plugins/zsh-autocomplete"
-
   echo "Creating symbolic links for .zshrc"
   ln -s "$DIR/zsh/zshrc" "$HOME/.zshrc"
   ln -s "$DIR/zsh/starship.toml" $"$STARSHIP_DIR/starship.toml"
+}
+
+setup_nu() {
+  if [ -e "$NUSHELL_DIR" ] && [ ! -L "$NUSHELL_DIR" ]; then
+    echo "Backing up existing configuration to $NUSHELL_DIR.bak"
+    mv "$NUSHELL_DIR" "$NUSHELL_DIR.bak"
+  fi
+
+  if [ -L "$NUSHELL_DIR" ] || [ -e "$NUSHELL_DIR" ]; then
+    echo "Cleaning up existing configuration"
+    rm -rf "$NUSHELL_DIR"
+  fi
+
+  echo "Creating symbolic link for nushell configuration"
+  ln -s "$DIR/$NUSHELL_CONFIG" "$NUSHELL_DIR"
 }
 
 setup_neovim() {
@@ -103,6 +109,6 @@ setup_ghostty() {
 }
 
 install_dependencies
-setup_zsh
+setup_nu
 setup_neovim
 setup_ghostty
