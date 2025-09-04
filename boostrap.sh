@@ -11,7 +11,17 @@ GHOSTTY_CONFIG="ghostty"
 
 STARSHIP_DIR=$HOME/.config
 
-DEPS=["fd" "ripgrep" "lazygit" "neovim" "ghostty" "starship"]
+DEPS=(
+  "fd"
+  "ripgrep"
+  "lazygit"
+  "neovim"
+  "starship"
+)
+
+CASKS=(
+  "ghostty"
+)
 
 install_homebrew() {
   if [[ "$OSTYPE" != "darwin"* ]]; then
@@ -30,10 +40,13 @@ install_dependencies() {
 
   if [[ "$OSTYPE" == "darwin"* ]]; then
     for dep in "${DEPS[@]}"; do
-      if ! command -v "$dep" >/dev/null 2>&1; then
-        echo "$dep not found. Installing with Homebrew"
-        brew install "$dep"
-      fi
+      echo "Checking for $dep"
+      brew list "$dep" >/dev/null 2>&1 || brew install "$dep"
+    done
+
+    for cask in "${CASKS[@]}"; do
+      echo "Checking for $cask"
+      brew list --cask "$cask" >/dev/null 2>&1 || brew install --cask "$cask"
     done
   fi
 }
@@ -79,15 +92,6 @@ setup_zsh() {
     echo "Cleaning up existing starship symlink"
     rm -rf "$STARSHIP_DIR/starship.toml"
   fi
-
-  if [ ! -d "$HOME/.oh-my-zsh/" ]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-  fi
-
-  git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
-  git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git "$ZSH_CUSTOM/plugins/zsh-autocomplete"
 
   echo "Creating symbolic links for .zshrc"
   ln -s "$DIR/zsh/zshrc" "$HOME/.zshrc"
