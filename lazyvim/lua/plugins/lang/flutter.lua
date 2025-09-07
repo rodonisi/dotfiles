@@ -12,6 +12,9 @@ return {
         debugger = {
           enabled = true,
         },
+        dev_log = {
+          enabled = false,
+        },
         lsp = {
           color = {
             enabled = true,
