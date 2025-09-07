@@ -19,6 +19,8 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' menu select
 
 # plugins
+
+
 zinit wait lucid for \
  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
     zdharma-continuum/fast-syntax-highlighting \
@@ -26,7 +28,6 @@ zinit wait lucid for \
     zsh-users/zsh-completions \
  atload"!_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions
-
 
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
@@ -37,6 +38,16 @@ zinit ice as"command" from"gh-r" \
           atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
           atpull"%atclone" src"init.zsh"
 zinit light starship/starship
+
+function _history_substring_search_config() {
+    export HISTORY_SUBSTRING_SEARCH_PREFIXED=1
+    bindkey '^[[A' history-substring-search-up
+    bindkey '^[[B' history-substring-search-downzinit snippet OMZ::plugins/git/git.plugin.zsh
+    bindkey -M vicmd 'k' history-substring-search-up
+    bindkey -M vicmd 'j' history-substring-search-down
+}
+zinit ice wait atload'_history_substring_search_config' silent
+zinit light 'zsh-users/zsh-history-substring-search'
 
 if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local          
