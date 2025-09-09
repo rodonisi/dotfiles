@@ -23,4 +23,12 @@ return {
       })
     end,
   },
+  {
+    "nvim-neotest/neotest",
+    ft = "dart",
+    dependencies = {
+      "sidlatau/neotest-dart",
+    },
+    opts = { adapters = { "neotest-dart" } },
+  },
 }
