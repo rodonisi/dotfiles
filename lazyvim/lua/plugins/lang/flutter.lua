@@ -23,4 +23,10 @@ return {
       })
     end,
   },
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "sidlatau/neotest-dart",
+    },
+  },
 }
