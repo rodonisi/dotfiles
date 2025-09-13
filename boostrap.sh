@@ -17,6 +17,7 @@ DEPS=(
   "lazygit"
   "neovim"
   "starship"
+  'carapace'
 )
 
 CASKS=(
