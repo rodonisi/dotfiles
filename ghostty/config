@@ -1,4 +1,4 @@
-theme = catppuccin-macchiato
+theme = Catppuccin Macchiato
 font-feature = -calt
 custom-shader-animation = true
 copy-on-select = clipboard
