@@ -44,6 +44,7 @@ zinit ice as"command" from"gh-r" \
           atpull"%atclone" src"init.zsh"
 zinit light starship/starship
 
+zinit snippet OMZ::plugins/git/git.plugin.zsh
 function _history_substring_search_config() {
     export HISTORY_SUBSTRING_SEARCH_PREFIXED=1
     bindkey '^[[A' history-substring-search-up
