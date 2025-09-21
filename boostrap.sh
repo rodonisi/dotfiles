@@ -39,7 +39,7 @@ install_homebrew() {
 install_dependencies() {
   install_homebrew
 
-  if [[ "$OSTYPE" == "darwin"* ]]; then
+  if  [[ "$OSTYPE" == "darwin"* ]] || command -v brew >/dev/null 2>&1; then
     for dep in "${DEPS[@]}"; do
       echo "Checking for $dep"
       brew list "$dep" >/dev/null 2>&1 || brew install "$dep"
