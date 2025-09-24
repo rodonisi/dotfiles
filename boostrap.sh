@@ -11,6 +11,14 @@ GHOSTTY_CONFIG="ghostty"
 
 STARSHIP_DIR=$HOME/.config
 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  LAZYGIT_DIR="$HOME/Library/Application Support/lazygit"
+else
+  LAZYGIT_DIR="$HOME/.config/lazygit"
+fi
+
+LAZYGIT_CONFIG="lazygit"
+
 DEPS=(
   "fd"
   "ripgrep"
@@ -107,7 +115,12 @@ setup_ghostty() {
   setup_dotconfig_tool "$GHOSTTY_CONFIG" "$GHOSTTY_DIR"
 }
 
+setup_lazygit() {
+  setup_dotconfig_tool "$LAZYGIT_CONFIG" "$LAZYGIT_DIR"
+}
+
 install_dependencies
 setup_zsh
 setup_neovim
 setup_ghostty
+setup_lazygit

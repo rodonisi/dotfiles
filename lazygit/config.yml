@@ -1,0 +1,7 @@
+gui:
+  nerdFontsVersion: "3"
+
+git:
+  log:
+    showGraph: always
+    showWholeGraph: true
