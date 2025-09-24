@@ -26,7 +26,19 @@ return {
   {
     "nvim-neotest/neotest",
     dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
       "sidlatau/neotest-dart",
+    },
+    opts = {
+      adapters = {
+        ["neotest-dart"] = {
+          command = "fvm flutter",
+          use_lsp = true,
+        },
+      },
     },
   },
 }
