@@ -3,3 +3,5 @@
 -- Add any additional options here
 
 vim.opt.textwidth = 120
+
+vim.g.root_spec = { "cwd" }
