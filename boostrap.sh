@@ -11,6 +11,9 @@ GHOSTTY_CONFIG="ghostty"
 
 STARSHIP_DIR=$HOME/.config
 
+AEROSPACE_DIR=$HOME/.config/aerospace
+AEROSPACE_CONFIG="aerospace"
+
 if [[ "$OSTYPE" == "darwin"* ]]; then
   LAZYGIT_DIR="$HOME/Library/Application Support/lazygit"
 else
@@ -30,6 +33,7 @@ DEPS=(
 
 CASKS=(
   "ghostty"
+  "nikitabobko/tap/aerospace"
 )
 
 install_homebrew() {
@@ -115,6 +119,12 @@ setup_ghostty() {
   setup_dotconfig_tool "$GHOSTTY_CONFIG" "$GHOSTTY_DIR"
 }
 
+setup_aerospace() {
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    setup_dotconfig_tool "$AEROSPACE_CONFIG" "$AEROSPACE_DIR"
+  fi
+}
+
 setup_lazygit() {
   setup_dotconfig_tool "$LAZYGIT_CONFIG" "$LAZYGIT_DIR"
 }
@@ -123,4 +133,5 @@ install_dependencies
 setup_zsh
 setup_neovim
 setup_ghostty
+setup_aerospace
 setup_lazygit
