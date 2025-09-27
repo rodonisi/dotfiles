@@ -14,6 +14,9 @@ STARSHIP_DIR=$HOME/.config
 AEROSPACE_DIR=$HOME/.config/aerospace
 AEROSPACE_CONFIG="aerospace"
 
+SKETCHYBAR_DIR=$HOME/.config/sketchybar
+SKETCHYBAR_CONFIG="sketchybar"
+
 if [[ "$OSTYPE" == "darwin"* ]]; then
   LAZYGIT_DIR="$HOME/Library/Application Support/lazygit"
 else
@@ -23,17 +26,19 @@ fi
 LAZYGIT_CONFIG="lazygit"
 
 DEPS=(
-  "fd"
-  "ripgrep"
-  "lazygit"
-  "neovim"
-  "starship"
+  'fd'
+  'ripgrep'
+  'lazygit'
+  'neovim'
+  'starship'
   'carapace'
+  'lua'
+  'FelixKratz/formulae/sketchybar'
 )
 
 CASKS=(
-  "ghostty"
-  "nikitabobko/tap/aerospace"
+  'ghostty'
+  'nikitabobko/tap/aerospace'
 )
 
 install_homebrew() {
@@ -51,7 +56,7 @@ install_homebrew() {
 install_dependencies() {
   install_homebrew
 
-  if  [[ "$OSTYPE" == "darwin"* ]] || command -v brew >/dev/null 2>&1; then
+  if [[ "$OSTYPE" == "darwin"* ]] || command -v brew >/dev/null 2>&1; then
     for dep in "${DEPS[@]}"; do
       echo "Checking for $dep"
       brew list "$dep" >/dev/null 2>&1 || brew install "$dep"
@@ -129,9 +134,14 @@ setup_lazygit() {
   setup_dotconfig_tool "$LAZYGIT_CONFIG" "$LAZYGIT_DIR"
 }
 
+setup_sketchybar() {
+  setup_dotconfig_tool "$SKETCHYBAR_CONFIG" "$SKETCHYBAR_DIR"
+}
+
 install_dependencies
 setup_zsh
 setup_neovim
 setup_ghostty
-setup_aerospace
 setup_lazygit
+setup_aerospace
+setup_sketchybar

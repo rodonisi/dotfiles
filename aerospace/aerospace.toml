@@ -1,4 +1,7 @@
 after-startup-command = [ ]
+exec-on-workspace-change = ['/bin/bash', '-c',
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
 start-at-login = false
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
@@ -40,7 +43,7 @@ inner.horizontal = 8
 inner.vertical = 8
 outer.left = 8
 outer.bottom = 8
-outer.top = 0
+outer.top = 46
 outer.right = 8
 
 [mode.main.binding]
