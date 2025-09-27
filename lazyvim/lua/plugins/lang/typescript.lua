@@ -10,4 +10,16 @@ return {
       },
     },
   },
+  {
+    "mfussenegger/nvim-dap",
+    opts = function()
+      local dap = require("dap")
+
+      dap.adapters.chrome = {
+        type = "executable",
+        command = "node",
+        args = { os.getenv("HOME") .. "/code/vscode-chrome-debug/out/src/chromeDebug.js" },
+      }
+    end,
+  },
 }
