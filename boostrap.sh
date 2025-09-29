@@ -34,6 +34,7 @@ DEPS=(
   'carapace'
   'lua'
   'FelixKratz/formulae/sketchybar'
+  'FelixKratz/formulae/borders'
 )
 
 CASKS=(

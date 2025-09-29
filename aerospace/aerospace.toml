@@ -1,4 +1,6 @@
-after-startup-command = [ ]
+after-startup-command = [
+  'exec-and-forget borders active_color=0xff66b2b2 inactive_color=0x00000000 width=8.0'
+]
 exec-on-workspace-change = ['/bin/bash', '-c',
     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
 ]
