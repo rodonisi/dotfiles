@@ -6,8 +6,10 @@ return {
       "nvim-lua/plenary.nvim",
       "mfussenegger/nvim-dap",
     },
-    config = function()
-      require("flutter-tools").setup({
+    opts = function(opts)
+      vim.keymap.set("n", "<leader>dd", "<Cmd>FlutterDebug<CR>", { desc = "Flutter Debug" })
+
+      return {
         fvm = true,
         debugger = {
           enabled = true,
@@ -20,7 +22,7 @@ return {
             enabled = true,
           },
         },
-      })
+      }
     end,
   },
   {
