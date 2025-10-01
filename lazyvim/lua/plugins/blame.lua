@@ -1,8 +1,8 @@
 return {
-  "braxtons12/blame_line.nvim",
-  event = "VeryLazy",
-  options = {
-    show_in_insert = false,
-    show_in_visual = false,
+  {
+    "lewis6991/gitsigns.nvim",
+    opts = {
+      current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+    },
   },
 }
