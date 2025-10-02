@@ -35,7 +35,7 @@ local function update_workspace_info()
 
 						-- Check if workspace is empty
 						if result == "" or result:match("^%s*$") then
-							icon_line = " —"
+							icon_line = "—"
 							is_empty = true
 						else
 							-- Parse the aerospace output directly
@@ -50,7 +50,7 @@ local function update_workspace_info()
 							end
 
 							if no_app then
-								icon_line = " —"
+								icon_line = "—"
 								is_empty = true
 							end
 						end
@@ -130,73 +130,6 @@ local function update_current_workspace(env)
 			end
 		end)
 	end
-end
-
-local function add_spaces_indicator()
-	local spaces_indicator = sbar.add("item", {
-		padding_left = -3,
-		padding_right = 0,
-		icon = {
-			padding_left = 8,
-			padding_right = 9,
-			color = colors.grey,
-			string = icons.switch.on,
-		},
-		label = {
-			width = 0,
-			padding_left = 0,
-			padding_right = 8,
-			string = "Workspaces",
-			color = colors.bg1,
-		},
-		background = {
-			color = colors.with_alpha(colors.grey, 0.0),
-			border_color = colors.with_alpha(colors.bg1, 0.0),
-		},
-	})
-
-	spaces_indicator:subscribe("swap_menus_and_spaces", function(env)
-		local currently_on = spaces_indicator:query().icon.value == icons.switch.on
-		spaces_indicator:set({
-			icon = currently_on and icons.switch.off or icons.switch.on,
-		})
-
-		-- Update workspace info when swapping back to spaces
-		if not currently_on then -- If we're switching TO spaces (icon was off, now on)
-			update_workspace_info()
-			update_current_workspace(env)
-		end
-	end)
-
-	spaces_indicator:subscribe("mouse.entered", function(env)
-		sbar.animate("tanh", 15, function()
-			spaces_indicator:set({
-				background = {
-					color = { alpha = 1.0 },
-					border_color = { alpha = 1.0 },
-				},
-				icon = { color = colors.bg1 },
-				label = { width = "dynamic" },
-			})
-		end)
-	end)
-
-	spaces_indicator:subscribe("mouse.exited", function(env)
-		sbar.animate("tanh", 15, function()
-			spaces_indicator:set({
-				background = {
-					color = { alpha = 0.0 },
-					border_color = { alpha = 0.0 },
-				},
-				icon = { color = colors.grey },
-				label = { width = 0 },
-			})
-		end)
-	end)
-
-	spaces_indicator:subscribe("mouse.clicked", function(env)
-		sbar.trigger("swap_menus_and_spaces")
-	end)
 end
 
 sbar.exec("aerospace list-workspaces --all", function(result)
@@ -288,7 +221,6 @@ sbar.exec("aerospace list-workspaces --all", function(result)
 			end)
 		end
 	end
-	add_spaces_indicator()
 	require("items.front_app")
 end)
 
@@ -298,8 +230,7 @@ space_window_observer:subscribe("aerospace_workspace_change", function(env)
 	update_current_workspace(env)
 end)
 
--- Set up periodic updates for workspace info (fallback)
-space_window_observer:subscribe("routine", function(env)
+space_window_observer:subscribe("front_app_switched", function(env)
 	update_workspace_info()
 	update_current_workspace(env)
 end)
