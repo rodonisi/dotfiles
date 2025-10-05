@@ -11,19 +11,41 @@ return {
 
       return {
         fvm = true,
+        widget_guides = {
+          enabled = true,
+        },
         debugger = {
           enabled = true,
         },
         dev_log = {
           enabled = false,
         },
-        lsp = {
-          color = {
-            enabled = true,
-          },
-        },
       }
     end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      inlay_hints = {
+        exclude = { "dart" },
+      },
+    },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "dart",
+      },
+    },
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    opts = {
+      ensure_installed = {
+        "dart-debug-adapter",
+      },
+    },
   },
   {
     "nvim-neotest/neotest",
@@ -38,6 +60,7 @@ return {
       adapters = {
         ["neotest-dart"] = {
           command = "fvm flutter",
+          args = { "test" },
           use_lsp = true,
         },
       },
