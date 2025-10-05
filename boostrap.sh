@@ -27,6 +27,7 @@ LAZYGIT_CONFIG="lazygit"
 
 DEPS=(
   'fd'
+  'fzf'
   'ripgrep'
   'lazygit'
   'neovim'
