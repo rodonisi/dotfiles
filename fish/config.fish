@@ -4,8 +4,10 @@ end
 
 set -U fish_color_command green
 
-set -Ux CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense' # optional
-carapace _carapace | source
+set -Ux CARAPACE_BRIDGES 'fish,bash,inshellisense'
+if command -q carapace
+    carapace _carapace | source
+end
 
 zoxide init fish --cmd cd | source
 
