@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
 DIR="$(cd "$(dirname "$0")" && pwd)"
 
 NVIM_DIR=$HOME/.config/nvim
@@ -10,6 +9,10 @@ GHOSTTY_DIR=$HOME/.config/ghostty
 GHOSTTY_CONFIG="ghostty"
 
 STARSHIP_DIR=$HOME/.config
+STARSHIP_CONFIG="starship"
+
+FISH_DIR=$HOME/.config/fish
+FISH_CONFIG="fish"
 
 AEROSPACE_DIR=$HOME/.config/aerospace
 AEROSPACE_CONFIG="aerospace"
@@ -33,6 +36,8 @@ DEPS=(
   'neovim'
   'starship'
   'carapace'
+  'zoxide'
+  'fish'
   'lua'
   'FelixKratz/formulae/sketchybar'
   'FelixKratz/formulae/borders'
@@ -92,18 +97,8 @@ setup_dotconfig_tool() {
 
 }
 
-setup_zsh() {
-  if [ -e "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ]; then
-    echo "Moving existing configuration to $HOME/.zshrc.local"
-    mv "$HOME/.zshrc" "$HOME/.zshrc.local"
-  fi
-
-  if [ -e "$HOME/.zshrc" ] || [ -L "$HOME/.zshrc" ]; then
-    echo "Cleaning up existing symlink"
-    rm -rf "$HOME/.zshrc"
-  fi
-
-  if [ -e "$DIR/zsh/starship.toml" ] && [ ! -L "$STARSHIP_DIR/starship.toml" ]; then
+setup_starship() {
+  if [ -e "$STARSHIP_DIR/starship.toml" ] && [ ! -L "$STARSHIP_DIR/starship.toml" ]; then
     echo "Moving existing starship configuration to $STARSHIP_DIR/starship.bak"
     mv "$STARSHIP_DIR/starship.toml" "$STARSHIP_DIR/starship.bak"
   fi
@@ -113,9 +108,18 @@ setup_zsh() {
     rm -rf "$STARSHIP_DIR/starship.toml"
   fi
 
-  echo "Creating symbolic links for .zshrc"
-  ln -s "$DIR/zsh/zshrc" "$HOME/.zshrc"
-  ln -s "$DIR/zsh/starship.toml" $"$STARSHIP_DIR/starship.toml"
+  echo "Creating symbolic links for starship"
+  ln -s "$DIR/$STARSHIP_CONFIG/starship.toml" $"$STARSHIP_DIR/starship.toml"
+
+}
+
+setup_fish() {
+  setup_dotconfig_tool "$FISH_CONFIG" "$FISH_DIR"
+
+  # add local config file
+  touch "$HOME"/.local.fish
+
+  setup_starship
 }
 
 setup_neovim() {
@@ -141,7 +145,7 @@ setup_sketchybar() {
 }
 
 install_dependencies
-setup_zsh
+setup_fish
 setup_neovim
 setup_ghostty
 setup_lazygit

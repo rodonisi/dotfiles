@@ -3,3 +3,9 @@
 lazy-lock.json
 
 lazygit/state.yml
+
+# fish state
+fish/completions
+fish/conf.d
+fish/functions
+fish/fish_variables
