@@ -17,6 +17,8 @@ end
 starship init fish | source
 enable_transience
 
+fish_vi_key_bindings
+
 if test -f ~/.local.fish
     source ~/.local.fish
 end
