@@ -20,6 +20,12 @@ run=[
 ]
 
 [[on-window-detected]]
+if.app-name-regex-substring = 'zen'
+run=[
+  "move-node-to-workspace B",
+]
+
+[[on-window-detected]]
 if.app-name-regex-substring = 'teams'
 run=[
   "move-node-to-workspace T", 
