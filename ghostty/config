@@ -7,3 +7,4 @@ window-decoration = auto
 auto-update = download
 auto-update-channel = stable
 config-file=?config.local
+config-file=?keybindings
