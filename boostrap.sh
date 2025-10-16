@@ -29,15 +29,22 @@ fi
 LAZYGIT_CONFIG="lazygit"
 
 DEPS=(
+  # nvim dependencies
   'fd'
   'fzf'
   'ripgrep'
+  'rust'
+  'clang-format'
   'lazygit'
   'neovim'
+
+  # terminal dependencies
   'starship'
   'carapace'
   'zoxide'
   'fish'
+
+  # macos setup
   'lua'
   'FelixKratz/formulae/sketchybar'
   'FelixKratz/formulae/borders'
