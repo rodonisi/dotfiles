@@ -9,27 +9,19 @@ local apple = sbar.add("item", {
 	icon = {
 		font = { size = 16.0 },
 		string = icons.apple,
-		padding_right = 8,
-		padding_left = 8,
+		padding_right = 11,
+		padding_left = 11,
 	},
 	label = { drawing = false },
-	background = {
-		color = colors.bg2,
-		border_color = colors.black,
-		border_width = 1,
-	},
+	-- background = {
+	-- 	-- color = colors.bg2,
+	-- 	-- border_color = colors.black,
+	-- 	color = colors.transparent,
+	-- 	border_width = 1,
+	-- },
 	padding_left = 1,
 	padding_right = 1,
 	click_script = "$CONFIG_DIR/helpers/menus/bin/menus -s 0",
-})
-
--- Double border for apple using a single item bracket
-sbar.add("bracket", { apple.name }, {
-	background = {
-		color = colors.transparent,
-		height = 30,
-		border_color = colors.grey,
-	},
 })
 
 -- Padding item required because of bracket
@@ -61,8 +53,22 @@ for i = 1, max_items, 1 do
 	menu_items[i] = menu
 end
 
-local menus = sbar.add("bracket", { "/menu\\..*/" }, {
-	background = { color = colors.bg1 },
+local menus = sbar.add("bracket", { apple.name, "/menu\\..*/" }, {
+	background = {
+		color = colors.bar.overlay,
+		border_color = colors.black,
+		border_width = 1,
+		height = settings.bar.height,
+	},
+})
+
+-- Double border for apple using a single item bracket
+local border = sbar.add("bracket", { apple.name, "/menu\\..*/" }, {
+	background = {
+		color = colors.transparent,
+		height = 34,
+		border_color = colors.bar.border,
+	},
 })
 
 local menu_padding = sbar.add("item", "menu.padding", {
@@ -72,12 +78,12 @@ local menu_padding = sbar.add("item", "menu.padding", {
 
 local hovering = false
 
-local function update_menus(env)
-	sbar.exec("$CONFIG_DIR/helpers/menus/bin/menus -l", function(menus)
+local function update_menus(_)
+	sbar.exec("$CONFIG_DIR/helpers/menus/bin/menus -l", function(m)
 		sbar.set("/menu\\..*/", { drawing = false })
 		menu_padding:set({ drawing = true })
-		id = 1
-		for menu in string.gmatch(menus, "[^\r\n]+") do
+		local id = 1
+		for menu in string.gmatch(m, "[^\r\n]+") do
 			if id < max_items then
 				menu_items[id]:set({ label = menu, drawing = true })
 			else
@@ -110,27 +116,35 @@ local function hide_menu_delayed()
 	end) -- 100ms delay
 end
 
-apple:subscribe("mouse.entered", function(env)
+apple:subscribe("mouse.entered", function(_)
 	show_menu()
 end)
 
-apple:subscribe("mouse.exited", function(env)
+apple:subscribe("mouse.exited", function(_)
 	hide_menu_delayed()
 end)
 
-menus:subscribe("mouse.entered", function(env)
+menus:subscribe("mouse.entered", function(_)
 	show_menu()
 end)
 
-menus:subscribe("mouse.exited", function(env)
+menus:subscribe("mouse.exited", function(_)
+	hide_menu_delayed()
+end)
+
+border:subscribe("mouse.entered", function(_)
+	show_menu()
+end)
+
+border:subscribe("mouse.exited", function(_)
 	hide_menu_delayed()
 end)
 
 for i = 1, max_items, 1 do
-	menu_items[i]:subscribe("mouse.entered", function(env)
+	menu_items[i]:subscribe("mouse.entered", function(_)
 		show_menu()
 	end)
-	menu_items[i]:subscribe("mouse.exited", function(env)
+	menu_items[i]:subscribe("mouse.exited", function(_)
 		hide_menu_delayed()
 	end)
 end

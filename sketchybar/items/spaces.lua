@@ -13,8 +13,8 @@ local space_window_observer = sbar.add("item", {
 })
 
 local function update_workspaces()
-	sbar.exec("aerospace list-workspaces --json --monitor all", function(result)
-		for _, v in pairs(result) do
+	sbar.exec("aerospace list-workspaces --json --monitor all", function(workspaces)
+		for _, v in pairs(workspaces) do
 			local workspace = v["workspace"]
 			sbar.exec("aerospace list-windows --json --workspace " .. workspace, function(result)
 				local icon_line = ""
@@ -40,13 +40,13 @@ local function update_workspaces()
 						drawing = show,
 						icon = { highlight = selected },
 						label = { string = icon_line, highlight = selected },
-						background = { border_color = selected and colors.black or colors.bg2 },
+						background = { border_color = selected and colors.teal or colors.bar.overlay },
 					})
 
 					if space.bracket then
 						space.bracket:set({
 							drawing = show,
-							background = { border_color = selected and colors.grey or colors.bg2 },
+							background = { border_color = selected and colors.grey or colors.bar.overlay },
 						})
 					end
 
@@ -66,6 +66,8 @@ local function update_current_workspace(env)
 end
 
 sbar.exec("aerospace list-workspaces --json --all", function(result)
+	sbar.add("item", "space.padding.start", { width = 24 })
+
 	for _, v in pairs(result) do
 		local workspace = v["workspace"]
 
@@ -91,7 +93,7 @@ sbar.exec("aerospace list-workspaces --json --all", function(result)
 			padding_right = 1,
 			padding_left = 1,
 			background = {
-				color = colors.bg1,
+				color = colors.bar.overlay,
 				border_width = 1,
 				height = 26,
 				border_color = colors.black,
@@ -105,7 +107,7 @@ sbar.exec("aerospace list-workspaces --json --all", function(result)
 			drawing = false, -- default to hidden to avoid flickering
 			background = {
 				color = colors.transparent,
-				border_color = colors.bg2,
+				border_color = colors.bar.overlay,
 				height = 28,
 				border_width = 2,
 			},
@@ -121,7 +123,18 @@ sbar.exec("aerospace list-workspaces --json --all", function(result)
 			sbar.exec("aerospace workspace " .. workspace)
 		end)
 	end
+
 	require("items.front_app")
+	sbar.add("item", "space.padding.end", { width = 0, padding_right = 0 })
+	sbar.add("bracket", { "/space\\..*/", "front_app" }, {
+		blur_radius = settings.bar.blur_radius,
+		background = {
+			color = colors.bar.bg,
+			border_color = colors.bar.bg,
+			height = settings.bar.height,
+			corner_radius = settings.bar.corner_radius,
+		},
+	})
 end)
 
 -- Set up event handlers for workspace changes
@@ -129,6 +142,6 @@ space_window_observer:subscribe("aerospace_workspace_change", function(env)
 	update_current_workspace(env)
 end)
 
-space_window_observer:subscribe("front_app_switched", function(env)
+space_window_observer:subscribe("front_app_switched", function(_)
 	update_workspaces()
 end)
