@@ -15,7 +15,6 @@ local apple = sbar.add("item", {
 	label = { drawing = false },
 	padding_left = 1,
 	padding_right = 1,
-	click_script = "$CONFIG_DIR/helpers/menus/bin/menus -s 0",
 })
 
 -- Padding item required because of bracket
@@ -47,7 +46,9 @@ for i = 1, max_items, 1 do
 	menu_items[i] = menu
 end
 
-local menus = sbar.add("bracket", { apple.name, "/menu\\..*/" }, {
+sbar.add("item", "menu.padding.end", { width = 0, drawing = false })
+
+sbar.add("bracket", { apple.name, "/menu\\..*/" }, {
 	background = {
 		color = colors.bar.overlay,
 		border_color = colors.black,
@@ -70,8 +71,6 @@ local menu_padding = sbar.add("item", "menu.padding", {
 	width = 5,
 })
 
-local hovering = false
-
 local function update_menus(_)
 	sbar.exec("$CONFIG_DIR/helpers/menus/bin/menus -l", function(m)
 		sbar.set("/menu\\..*/", { drawing = false })
@@ -90,22 +89,37 @@ end
 
 menu_watcher:subscribe("front_app_switched", update_menus)
 
-local function show_menu()
-	if not hovering then
-		hovering = true
-		menu_watcher:set({ updates = true })
-		sbar.set("front_app", { drawing = false })
+local hovering = false
+local toggle = false
+
+local function set_visibility(visibility)
+	menu_watcher:set({ updates = visibility })
+	if visibility then
 		update_menus()
+	else
+		sbar.set("/menu\\..*/", { drawing = visibility })
+	end
+end
+
+local toggle_menu = function()
+	toggle = not toggle
+	if not hovering then
+		set_visibility(toggle)
+	end
+end
+
+local function show_menu()
+	if not hovering and not toggle then
+		hovering = true
+		set_visibility(true)
 	end
 end
 
 local function hide_menu_delayed()
 	hovering = false
 	sbar.delay(0.5, function()
-		if not hovering then
-			menu_watcher:set({ updates = false })
-			sbar.set("/menu\\..*/", { drawing = false })
-			sbar.set("front_app", { drawing = true })
+		if not hovering and not toggle then
+			set_visibility(false)
 		end
 	end) -- 100ms delay
 end
@@ -118,12 +132,13 @@ apple:subscribe("mouse.exited", function(_)
 	hide_menu_delayed()
 end)
 
-menus:subscribe("mouse.entered", function(_)
-	show_menu()
-end)
-
-menus:subscribe("mouse.exited", function(_)
-	hide_menu_delayed()
+apple:subscribe("mouse.clicked", function(env)
+	if env.BUTTON == "left" then
+		sbar.exec("$CONFIG_DIR/helpers/menus/bin/menus -s 0")
+	end
+	if env.BUTTON == "right" then
+		toggle_menu()
+	end
 end)
 
 border:subscribe("mouse.entered", function(_)
