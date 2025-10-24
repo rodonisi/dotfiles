@@ -13,12 +13,6 @@ local apple = sbar.add("item", {
 		padding_left = 11,
 	},
 	label = { drawing = false },
-	-- background = {
-	-- 	-- color = colors.bg2,
-	-- 	-- border_color = colors.black,
-	-- 	color = colors.transparent,
-	-- 	border_width = 1,
-	-- },
 	padding_left = 1,
 	padding_right = 1,
 	click_script = "$CONFIG_DIR/helpers/menus/bin/menus -s 0",
@@ -66,7 +60,7 @@ local menus = sbar.add("bracket", { apple.name, "/menu\\..*/" }, {
 local border = sbar.add("bracket", { apple.name, "/menu\\..*/" }, {
 	background = {
 		color = colors.transparent,
-		height = 34,
+		height = settings.bar.height,
 		border_color = colors.bar.border,
 	},
 })

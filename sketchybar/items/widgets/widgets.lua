@@ -1,10 +1,13 @@
 local colors = require("colors")
 local settings = require("settings")
+sbar.add("item", { width = 5, position = "right" })
 
 sbar.add("item", "widgets.padding.start", {
 	position = "right",
 	width = 16,
 })
+
+sbar.add("item", { width = 5 })
 local widgets = {
 	require("items.widgets.calendar"),
 	require("items.widgets.battery"),
@@ -23,6 +26,7 @@ sbar.add("bracket", { "/widgets\\..*/" }, {}, {
 		border_color = colors.bar.bg,
 		height = settings.bar.height,
 		corner_radius = settings.bar.corner_radius,
+		y_offset = settings.bar.y_offset,
 	},
 })
 
@@ -35,6 +39,7 @@ for _, widget in ipairs(widgets) do
 		background = {
 			color = colors.bar.overlay,
 			height = settings.overlay.height,
+			y_offset = settings.bar.y_offset,
 		},
 	})
 end

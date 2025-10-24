@@ -97,6 +97,7 @@ sbar.exec("aerospace list-workspaces --json --all", function(result)
 				border_width = 1,
 				height = 26,
 				border_color = colors.black,
+				y_offset = settings.bar.y_offset,
 			},
 		})
 
@@ -133,6 +134,7 @@ sbar.exec("aerospace list-workspaces --json --all", function(result)
 			border_color = colors.bar.bg,
 			height = settings.bar.height,
 			corner_radius = settings.bar.corner_radius,
+			y_offset = settings.bar.y_offset,
 		},
 	})
 end)
