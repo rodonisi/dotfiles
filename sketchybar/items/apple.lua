@@ -46,7 +46,10 @@ for i = 1, max_items, 1 do
 	menu_items[i] = menu
 end
 
-sbar.add("item", "menu.padding.end", { width = 0, drawing = false })
+local end_padding = sbar.add("item", "menu.padding.end", {
+	width = 1,
+	drawing = false,
+})
 
 sbar.add("bracket", { apple.name, "/menu\\..*/" }, {
 	background = {
@@ -54,7 +57,14 @@ sbar.add("bracket", { apple.name, "/menu\\..*/" }, {
 		border_color = colors.black,
 		border_width = 1,
 		height = settings.bar.height,
+		y_offset = settings.bar.y_offset,
 	},
+})
+
+-- spacing for next bar
+local menu_padding = sbar.add("item", {
+	width = 30,
+	drawing = false,
 })
 
 -- Double border for apple using a single item bracket
@@ -63,18 +73,14 @@ local border = sbar.add("bracket", { apple.name, "/menu\\..*/" }, {
 		color = colors.transparent,
 		height = settings.bar.height,
 		border_color = colors.bar.border,
+		y_offset = settings.bar.y_offset,
 	},
-})
-
-local menu_padding = sbar.add("item", "menu.padding", {
-	drawing = false,
-	width = 5,
 })
 
 local function update_menus(_)
 	sbar.exec("$CONFIG_DIR/helpers/menus/bin/menus -l", function(m)
 		sbar.set("/menu\\..*/", { drawing = false })
-		menu_padding:set({ drawing = true })
+		end_padding:set({ drawing = true })
 		local id = 1
 		for menu in string.gmatch(m, "[^\r\n]+") do
 			if id < max_items then
@@ -94,6 +100,7 @@ local toggle = false
 
 local function set_visibility(visibility)
 	menu_watcher:set({ updates = visibility })
+	menu_padding:set({ drawing = visibility })
 	if visibility then
 		update_menus()
 	else
