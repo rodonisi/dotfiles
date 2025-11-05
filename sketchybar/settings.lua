@@ -2,10 +2,10 @@ return {
 	paddings = 3,
 	group_paddings = 5,
 	bar = {
-		height = 36,
+		height = 34,
 		corner_radius = 32,
 		blur_radius = 10,
-		y_offset = -1,
+		y_offset = 0,
 	},
 	overlay = {
 		height = 26,

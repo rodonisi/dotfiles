@@ -1,6 +1,5 @@
 local colors = require("colors")
 local settings = require("settings")
-sbar.add("item", { width = 5, position = "right" })
 
 sbar.add("item", "widgets.padding.start", {
 	position = "right",
