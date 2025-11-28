@@ -1,5 +1,17 @@
 return {
   {
+    "mason-org/mason-lspconfig.nvim",
+    opts = {
+      ensure_installed = {
+        "pyrefly",
+      },
+    },
+    dependencies = {
+      "mason-org/mason.nvim",
+      "neovim/nvim-lspconfig",
+    },
+  },
+  {
     "nvimtools/none-ls.nvim",
     optional = true,
     opts = function(_, opts)
