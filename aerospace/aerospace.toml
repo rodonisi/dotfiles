@@ -72,8 +72,10 @@ alt-shift-j = "move down"
 alt-shift-k = "move up"
 alt-shift-l = "move right"
 
-alt-minus = "resize smart -50"
-alt-equal = "resize smart +50"
+alt-minus = "resize width -50"
+alt-equal = "resize width +50"
+alt-shift-minus = "resize height -50"
+alt-shift-equal = "resize width +50"
 
 alt-1 = "workspace 1"
 alt-2 = "workspace 2"
@@ -84,14 +86,14 @@ alt-c = "workspace C"
 alt-m = "workspace M"
 alt-n = "workspace N"
 alt-t = "workspace T"
-alt-shift-1 = "move-node-to-workspace 1"
-alt-shift-2 = "move-node-to-workspace 2"
-alt-shift-3 = "move-node-to-workspace 3"
-alt-shift-4 = "move-node-to-workspace 4"
-alt-shift-b = "move-node-to-workspace B"
-alt-shift-c = "move-node-to-workspace C"
-alt-shift-m = "move-node-to-workspace M"
-alt-shift-n = "move-node-to-workspace N"
+alt-shift-1 = [ "move-node-to-workspace 1", "workspace 1" ]
+alt-shift-2 = [ "move-node-to-workspace 2", "workspace 2" ]
+alt-shift-3 = [ "move-node-to-workspace 3", "workspace 3" ]
+alt-shift-4 = [ "move-node-to-workspace 4", "workspace 4" ]
+alt-shift-b = [ "move-node-to-workspace B", "workspace B" ]
+alt-shift-c = [ "move-node-to-workspace C", "workspace C" ]
+alt-shift-m = [ "move-node-to-workspace M", "workspace M" ]
+alt-shift-n = [ "move-node-to-workspace N", "workspace N" ]
 alt-tab = "workspace-back-and-forth"
 alt-shift-tab = "move-workspace-to-monitor --wrap-around next"
 
