@@ -11,15 +11,15 @@ return {
       "neovim/nvim-lspconfig",
     },
   },
-  {
-    "nvimtools/none-ls.nvim",
-    optional = true,
-    opts = function(_, opts)
-      local nls = require("none-ls")
-      opts.sources = opts.sources or {}
-      table.insert(opts.sources, nls.builtins.formatting.black)
-    end,
-  },
+  -- {
+  --   "nvimtools/none-ls.nvim",
+  --   optional = true,
+  --   opts = function(_, opts)
+  --     local nls = require("none-ls")
+  --     opts.sources = opts.sources or {}
+  --     table.insert(opts.sources, nls.builtins.formatting.black)
+  --   end,
+  -- },
   {
     "stevearc/conform.nvim",
     optional = true,
@@ -36,6 +36,36 @@ return {
           },
         },
       },
+    },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = { ensure_installed = { "ninja", "rst" } },
+  },
+  {
+    "mfussenegger/nvim-dap-python",
+  -- stylua: ignore
+  keys = {
+    { "<leader>dPt", function() require('dap-python').test_method() end, desc = "Debug Method", ft = "python" },
+    { "<leader>dPc", function() require('dap-python').test_class() end, desc = "Debug Class", ft = "python" },
+  },
+    config = function()
+      require("dap-python").setup("debugpy-adapter")
+    end,
+  },
+  {
+    "mfussenegger/nvim-dap",
+    optional = true,
+    dependencies = {
+      "mfussenegger/nvim-dap-python",
+    -- stylua: ignore
+    keys = {
+      { "<leader>dPt", function() require('dap-python').test_method() end, desc = "Debug Method", ft = "python" },
+      { "<leader>dPc", function() require('dap-python').test_class() end, desc = "Debug Class", ft = "python" },
+    },
+      config = function()
+        require("dap-python").setup("debugpy-adapter")
+      end,
     },
   },
   {
@@ -56,5 +86,17 @@ return {
         },
       },
     },
+  },
+  {
+    "linux-cultist/venv-selector.nvim",
+    cmd = "VenvSelect",
+    opts = {
+      options = {
+        notify_user_on_venv_activation = true,
+      },
+    },
+    --  Call config for Python files and load the cached venv automatically
+    ft = "python",
+    keys = { { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv", ft = "python" } },
   },
 }
