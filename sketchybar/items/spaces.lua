@@ -13,10 +13,10 @@ local space_window_observer = sbar.add("item", {
 })
 
 local function update_workspaces()
-	sbar.exec("aerospace list-workspaces --json --monitor all", function(workspaces)
+	sbar.exec(settings.spaces.command .. " list-workspaces --json --monitor all", function(workspaces)
 		for _, v in pairs(workspaces) do
 			local workspace = v["workspace"]
-			sbar.exec("aerospace list-windows --json --workspace " .. workspace, function(result)
+			sbar.exec(settings.spaces.command .. " list-windows --json --workspace " .. workspace, function(result)
 				local icon_line = ""
 				local empty = true
 				for _, app in pairs(result) do
@@ -65,7 +65,7 @@ local function update_current_workspace(env)
 	update_workspaces()
 end
 
-sbar.exec("aerospace list-workspaces --json --all", function(result)
+sbar.exec(settings.spaces.command .. " list-workspaces --json --all", function(result)
 	sbar.add("item", "space.padding.start", { width = 24 })
 
 	for _, v in pairs(result) do
@@ -121,7 +121,7 @@ sbar.exec("aerospace list-workspaces --json --all", function(result)
 		})
 
 		space:subscribe("mouse.clicked", function()
-			sbar.exec("aerospace workspace " .. workspace)
+			sbar.exec(settings.spaces.command .. " workspace " .. workspace)
 		end)
 	end
 

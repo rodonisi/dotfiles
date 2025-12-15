@@ -14,8 +14,7 @@ STARSHIP_CONFIG="starship"
 FISH_DIR=$HOME/.config/fish
 FISH_CONFIG="fish"
 
-AEROSPACE_DIR=$HOME/.config/aerospace
-AEROSPACE_CONFIG="aerospace"
+HYPRSPACE_CONFIG="hyprspace"
 
 SKETCHYBAR_DIR=$HOME/.config/sketchybar
 SKETCHYBAR_CONFIG="sketchybar"
@@ -52,7 +51,8 @@ DEPS=(
 
 CASKS=(
   'ghostty'
-  'nikitabobko/tap/aerospace'
+  # 'nikitabobko/tap/aerospace'
+  'BarutSRB/tap/hyprspace'
 )
 
 install_homebrew() {
@@ -137,9 +137,9 @@ setup_ghostty() {
   setup_dotconfig_tool "$GHOSTTY_CONFIG" "$GHOSTTY_DIR"
 }
 
-setup_aerospace() {
+setup_hyprspace() {
   if [[ "$OSTYPE" == "darwin"* ]]; then
-    setup_dotconfig_tool "$AEROSPACE_CONFIG" "$AEROSPACE_DIR"
+    ln -s "$DIR/$HYPRSPACE_CONFIG/hyprspace.toml" $"$HOME/.hyprspace.toml"
   fi
 }
 
@@ -156,5 +156,5 @@ setup_fish
 setup_neovim
 setup_ghostty
 setup_lazygit
-setup_aerospace
+setup_hyprspace
 setup_sketchybar
