@@ -43,6 +43,12 @@ run=[
   "move-node-to-workspace N", 
 ]
 
+[[on-window-detected]]
+if.app-name-regex-substring = 'spotify'
+run=[
+  "move-node-to-workspace S", 
+]
+
 [key-mapping]
 preset = "qwerty"
 
@@ -86,6 +92,7 @@ alt-c = "workspace C"
 alt-m = "workspace M"
 alt-n = "workspace N"
 alt-t = "workspace T"
+alt-s = "workspace S"
 alt-shift-1 = [ "move-node-to-workspace 1", "workspace 1" ]
 alt-shift-2 = [ "move-node-to-workspace 2", "workspace 2" ]
 alt-shift-3 = [ "move-node-to-workspace 3", "workspace 3" ]
@@ -94,6 +101,7 @@ alt-shift-b = [ "move-node-to-workspace B", "workspace B" ]
 alt-shift-c = [ "move-node-to-workspace C", "workspace C" ]
 alt-shift-m = [ "move-node-to-workspace M", "workspace M" ]
 alt-shift-n = [ "move-node-to-workspace N", "workspace N" ]
+alt-shift-s = [ "move-node-to-workspace S", "workspace S" ]
 alt-tab = "workspace-back-and-forth"
 alt-shift-tab = "move-workspace-to-monitor --wrap-around next"
 
