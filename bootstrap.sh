@@ -20,6 +20,9 @@ AEROSPACE_CONFIG="aerospace"
 SKETCHYBAR_DIR=$HOME/.config/sketchybar
 SKETCHYBAR_CONFIG="sketchybar"
 
+WORKTRUNK_DIR=$HOME/.config/worktrunk
+WORKTRUNK_CONFIG="worktrunk"
+
 if [[ "$OSTYPE" == "darwin"* ]]; then
   LAZYGIT_DIR="$HOME/Library/Application Support/lazygit"
 else
@@ -43,6 +46,7 @@ DEPS=(
   'carapace'
   'zoxide'
   'fish'
+  'worktrunk'
 
   # macos setup
   'lua'
@@ -151,6 +155,10 @@ setup_sketchybar() {
   setup_dotconfig_tool "$SKETCHYBAR_CONFIG" "$SKETCHYBAR_DIR"
 }
 
+setup_worktrunk() {
+  setup_dotconfig_tool "$WORKTRUNK_CONFIG" "$WORKTRUNK_DIR"
+}
+
 install_dependencies
 setup_fish
 setup_neovim
@@ -158,3 +166,4 @@ setup_ghostty
 setup_lazygit
 setup_aerospace
 setup_sketchybar
+setup_worktrunk
