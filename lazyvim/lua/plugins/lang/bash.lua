@@ -1,11 +1,10 @@
 return {
   {
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
-    ft = { "sh", "bash" },
+    "neovim/nvim-lspconfig",
     opts = {
-      ensure_installed = {
-        "shellcheck",
-        "bash-language-server",
+      servers = {
+        -- Bash Language Server
+        bashls = {},
       },
     },
   },
