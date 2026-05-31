@@ -14,14 +14,17 @@ STARSHIP_CONFIG="starship"
 FISH_DIR=$HOME/.config/fish
 FISH_CONFIG="fish"
 
-AEROSPACE_DIR=$HOME/.config/aerospace
-AEROSPACE_CONFIG="aerospace"
+# AEROSPACE_DIR=$HOME/.config/aerospace
+# AEROSPACE_CONFIG="aerospace"
 
 SKETCHYBAR_DIR=$HOME/.config/sketchybar
 SKETCHYBAR_CONFIG="sketchybar"
 
 WORKTRUNK_DIR=$HOME/.config/worktrunk
 WORKTRUNK_CONFIG="worktrunk"
+
+RIFT_DIR=$HOME/.config/rift
+RIFT_CONFIG="rift"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   LAZYGIT_DIR="$HOME/Library/Application Support/lazygit"
@@ -52,6 +55,7 @@ DEPS=(
   'lua'
   'FelixKratz/formulae/sketchybar'
   'FelixKratz/formulae/borders'
+  'acsandmann/tap/rift'
 )
 
 CASKS=(
@@ -159,11 +163,17 @@ setup_worktrunk() {
   setup_dotconfig_tool "$WORKTRUNK_CONFIG" "$WORKTRUNK_DIR"
 }
 
+setup_rift() {
+  setup_dotconfig_tool "$RIFT_CONFIG" "$RIFT_DIR"
+  rift service install
+  rift service start
+}
+
 install_dependencies
 setup_fish
 setup_neovim
 setup_ghostty
 setup_lazygit
-setup_aerospace
 setup_sketchybar
 setup_worktrunk
+setup_rift
