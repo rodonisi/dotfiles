@@ -322,11 +322,12 @@ workspace_names = ["1", "2", "3", "4", "5", "6", "B", "C", "T", "M", "N", "S"]
 #
 # By default there are no app rules; add or uncomment rules below as needed.
 app_rules = [
-  { title_regex = "Zen", workspace = "B" },
-  { title_regex = "Teams", workspace = "T" },
-  { title_regex = "Outlook", workspace = "M" },
-  { title_regex = "Obsidian", workspace = "N" },
-  { title_regex = "Spotify", workspace = "S" },
+  { app_name = "Zen", workspace = "B" },
+  { app_name = "Teams", workspace = "T" },
+  { app_name = "Outlook", workspace = "M" },
+  { app_name = "Obsidian", workspace = "N" },
+  { app_name = "Spotify", workspace = "S" },
+  { title_substring = "Preferences", floating = true },
 ]
 
 # Modifier combinations that can be reused in key bindings
