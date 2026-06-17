@@ -23,8 +23,8 @@ animation_fps = 100.0
 # - mouse_follows_focus: when focus changes, move the mouse to the focused window
 # - mouse_hides_on_focus: hide the mouse cursor after focusing a window
 focus_follows_mouse = true
-mouse_follows_focus = false
-mouse_hides_on_focus = false
+mouse_follows_focus = true
+mouse_hides_on_focus = true
 # focus_follows_mouse_disable_hotkey temporarily suspends focus-follows-mouse while held
 # e.g. "Fn"; omit or set to null to keep focus-follows-mouse always active
 #focus_follows_mouse_disable_hotkey = "Fn"
@@ -447,14 +447,15 @@ comb1 = "Alt + Shift"
 # "Alt + Shift + S" = { move_mouse_to_display = 1 }
 # "Alt + Shift + D" = { move_mouse_to_display = "e9a4f5a1-2f8b-45c1-9f4e-5a6b7c8d9e0f" }
 # Focus another display (direction/index/uuid)
-# "Alt + Shift + F" = { focus_display = "right" }
+"Alt + Ctrl + H" = { focus_display = "left" }
+"Alt + Ctrl + L" = { focus_display = "right" }
 
 # Move a window to a display (by index, UUID, or direction)
-# "Alt + Ctrl + Up" = { move_window_to_display = { selector = "up" } }
-# "Alt + Ctrl + Down" = { move_window_to_display = { selector = "down" } }
-# "Alt + Ctrl + Left" = { move_window_to_display = { selector = "left" } }
-# "Alt + Ctrl + Right" = { move_window_to_display = { selector = "right" } }
-# "Alt + Ctrl + A" = { move_window_to_display = { selector = 0 } }
+"Alt + Ctrl + Up" = { move_window_to_display = { selector = "up" } }
+"Alt + Ctrl + Down" = { move_window_to_display = { selector = "down" } }
+"Alt + Ctrl + Left" = { move_window_to_display = { selector = "left" } }
+"Alt + Ctrl + Right" = { move_window_to_display = { selector = "right" } }
+"Alt + Ctrl + A" = { move_window_to_display = { selector = 0 } }
 
 # if mission control is enabled
 # this will show an exploded view of the windows in the active workspace
