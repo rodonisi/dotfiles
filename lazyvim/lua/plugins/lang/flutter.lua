@@ -40,6 +40,7 @@ return {
       adapters = {
         ["neotest-dart"] = {
           command = "fvm flutter",
+          use_lsp = true,
         },
       },
     },
