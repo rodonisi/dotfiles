@@ -1,7 +1,14 @@
 return {
   {
     "nvim-flutter/flutter-tools.nvim",
-    ft = "dart",
+    ft = { "dart", "arb" },
+    init = function()
+      vim.filetype.add({
+        extension = {
+          arb = "json",
+        },
+      })
+    end,
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
