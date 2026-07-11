@@ -14,6 +14,9 @@ STARSHIP_CONFIG="starship"
 FISH_DIR=$HOME/.config/fish
 FISH_CONFIG="fish"
 
+# AEROSPACE_DIR=$HOME/.config/aerospace
+# AEROSPACE_CONFIG="aerospace"
+
 SKETCHYBAR_DIR=$HOME/.config/sketchybar
 SKETCHYBAR_CONFIG="sketchybar"
 
@@ -52,11 +55,11 @@ DEPS=(
   'lua'
   'FelixKratz/formulae/sketchybar'
   'FelixKratz/formulae/borders'
-  'acsandmann/tap/rift'
 )
 
 CASKS=(
   'ghostty'
+  'nikitabobko/tap/aerospace'
 )
 
 install_homebrew() {
@@ -141,6 +144,12 @@ setup_ghostty() {
   setup_dotconfig_tool "$GHOSTTY_CONFIG" "$GHOSTTY_DIR"
 }
 
+setup_aerospace() {
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    setup_dotconfig_tool "$AEROSPACE_CONFIG" "$AEROSPACE_DIR"
+  fi
+}
+
 setup_lazygit() {
   setup_dotconfig_tool "$LAZYGIT_CONFIG" "$LAZYGIT_DIR"
 }
@@ -166,4 +175,4 @@ setup_ghostty
 setup_lazygit
 setup_sketchybar
 setup_worktrunk
-setup_rift
+setup_aerospace
