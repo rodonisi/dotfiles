@@ -18,27 +18,23 @@ on-focused-monitor-changed = ["move-mouse monitor-lazy-center"]
 automatically-unhide-macos-hidden-apps = false
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'orion'
+if = "test %{app-name} ~= zen"
 run = ["move-node-to-workspace B"]
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'zen'
-run = ["move-node-to-workspace B"]
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'teams'
+if = "test %{app-name} ~= teams"
 run = ["move-node-to-workspace T"]
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'outlook'
+if = "test %{app-name} ~= outlook"
 run = ["move-node-to-workspace M"]
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'obsidian'
+if = "test %{app-name} ~= obsidian"
 run = ["move-node-to-workspace N"]
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'spotify'
+if = "test %{app-name} ~= spotify"
 run = ["move-node-to-workspace S"]
 
 [key-mapping]
