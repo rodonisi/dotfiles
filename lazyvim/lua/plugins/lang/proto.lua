@@ -2,7 +2,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = {
-      servers = { protols = {} },
+      servers = { buf_ls = {} },
     },
   },
 }
